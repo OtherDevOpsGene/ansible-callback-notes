@@ -48,9 +48,17 @@ kubectl get svc -l "app.kubernetes.io/managed-by=awx-operator"
 kubectl port-forward services/awx-demo-service :80 &
 ```
 
-The AWX operator needed the `m5.xlarge` instances in the nodegroup. With just 
-`m5.large`, the `aws-demo` pods were stuck in `Pending` with a warning 
+The AWX operator needed the `m5.xlarge` instances in the nodegroup. With just
+`m5.large`, the `aws-demo` pods were stuck in `Pending` with a warning
 `Insufficient cpu.`
+
+Use `service_type: LoadBalancer` so Ansible will have a URL to hit for the AWX
+server. It will take a few minutes to be up and running. Then you can log in
+with username `admin`. Get the admin password from:
+
+```bash
+kubectl get secret awx-demo-admin-password -o jsonpath="{.data.password}" | base64 --decode
+```
 
 ## Terraform ASG
 
