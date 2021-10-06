@@ -1,0 +1,9 @@
+---
+
+- hosts: all
+  tasks:
+  - name: Creating a file with content
+    copy:
+      dest: "/tmp/test-file.txt"
+      content: |
+        My hovercraft is full of eels.
