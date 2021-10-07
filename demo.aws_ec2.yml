@@ -1,0 +1,21 @@
+# demo.aws_ec2.yml
+plugin: amazon.aws.aws_ec2
+
+boto_profile: ice-eks
+
+regions:
+  - us-east-2
+
+keyed_groups:
+  # add hosts to tag_Name_value groups for each aws_ec2 host's tags.Name variable
+  - key: tags.Owner
+    prefix: tag_Owner_
+    separator: ""
+
+groups:
+  # add hosts to the group development if any of the dictionary's keys or values is the word 'devel'
+  gene: "'gene.gotimer' in (tags|list)"
+  
+compose:
+  # set the ansible_host variable to connect with the private IP address without changing the hostname
+  ansible_host: private_ip_address
